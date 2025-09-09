@@ -1,0 +1,36 @@
+name: leetcode-haskell
+version: 0.1.0.0
+author: "Attar Aziz"
+maintainer: "attar_a@outlook.com"
+# extra-source-files: README.md
+
+dependencies:
+    - base >= 4.7 && < 5
+
+library:
+    source-dirs: src
+    exposed-modules:
+        - MyLib
+        - Problems.Arrays.Arrays
+    # other-modules: not needed because hpack auto detects them
+    ghc-options:
+        - -Wall
+        - -O2
+        - -funbox-strict-fields
+        - -fno-omit-interface-pragmas
+    dependencies:
+        - text
+        - deepseq
+
+executables:
+    leetcode-haskell-runner:
+        main: Main.hs
+        source-dirs: app
+        ghc-options:
+            - -Wall
+            - -O2
+            - -rtsopts
+            - -with-rtsopts=-N
+            - -threaded
+        dependencies:
+            - leetcode-haskell

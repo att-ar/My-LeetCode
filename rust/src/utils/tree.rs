@@ -8,14 +8,23 @@ use std::{
 #[derive(Debug)]
 pub struct TreeNode {
     pub val: i32,
-    pub left: Option<Rc<RefCell<TreeNode>>>,
-    pub right: Option<Rc<RefCell<TreeNode>>>,
+    pub left: Option<Rc<RefCell<Self>>>,
+    pub right: Option<Rc<RefCell<Self>>>,
 }
 
 impl TreeNode {
+    #[inline]
+    pub fn new(val: i32) -> Self {
+        Self {
+            val,
+            left: None,
+            right: None,
+        }
+    }
+
     /// Build a binary tree from a level-order vector where `None` represents missing nodes.
     /// Returns `None` if the vector is empty or the first element is `None`.
-    pub fn from_vec(values: Vec<Option<i32>>) -> Option<Rc<RefCell<TreeNode>>> {
+    pub fn from_vec(values: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
         if values.is_empty() {
             return None;
         }
@@ -23,18 +32,18 @@ impl TreeNode {
         let mut iter = values.into_iter();
         let root_val = iter.next().unwrap()?;
 
-        let root = Rc::new(RefCell::new(TreeNode {
+        let root = Rc::new(RefCell::new(Self {
             val: root_val,
             left: None,
             right: None,
         }));
-        let mut queue: VecDeque<Rc<RefCell<TreeNode>>> = VecDeque::new();
+        let mut queue: VecDeque<Rc<RefCell<Self>>> = VecDeque::new();
         queue.push_back(Rc::clone(&root));
 
         while let Some(parent) = queue.pop_front() {
             if let Some(next) = iter.next() {
                 if let Some(v) = next {
-                    let left = Rc::new(RefCell::new(TreeNode {
+                    let left = Rc::new(RefCell::new(Self {
                         val: v,
                         left: None,
                         right: None,
@@ -48,7 +57,7 @@ impl TreeNode {
 
             if let Some(next) = iter.next() {
                 if let Some(v) = next {
-                    let right = Rc::new(RefCell::new(TreeNode {
+                    let right = Rc::new(RefCell::new(Self {
                         val: v,
                         left: None,
                         right: None,

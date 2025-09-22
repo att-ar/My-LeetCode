@@ -5,10 +5,10 @@ pub struct ListNode {
 }
 
 impl ListNode {
-    // #[inline]
-    // fn new(val: i32) -> Self {
-    //     ListNode { next: None, val }
-    // }
+    #[inline]
+    pub fn new(val: i32) -> Self {
+        ListNode { next: None, val }
+    }
 }
 
 impl std::fmt::Display for Box<ListNode> {
@@ -27,7 +27,7 @@ impl std::fmt::Display for Box<ListNode> {
 impl From<Vec<i32>> for Box<ListNode> {
     /// Return the first entry as the head of the list
     /// Very cool foldr
-    fn from(list: Vec<i32>) -> Box<ListNode> {
+    fn from(list: Vec<i32>) -> Self {
         let opt = list
             .into_iter()
             .rev()
